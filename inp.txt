@@ -1,15 +1,11 @@
 Start
 
-Batprint(Hello World do Batman aqui);
-
-BatInt x=5;
-BatChar nome = Felipe;
-Batdouble y= 1.5;
-
-
+BatChar x = "teste";
+BatDouble z = 5.1;
 
 Batprint(x);
-Batprint(nome);
+Batprint(10);
+Batprint("nome");
 Batprint(y);
 
 fim

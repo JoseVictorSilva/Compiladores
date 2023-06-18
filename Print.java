@@ -9,7 +9,7 @@ public class Print{
 
 	public String printString(String frase){
 		
-		return "System.out.println("+ frase +")";
+		return "System.out.println("+ frase +");\n\t";
 		
 }
 	

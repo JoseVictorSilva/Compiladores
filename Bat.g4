@@ -22,15 +22,6 @@ options{
 
 }
 
-/* 
-inicio: {saida+= x.printInicio();}
-                'inicio' 
-                    cmd
-                'fim' 
-            {saida+= x.printFim();} 
-        {System.out.println(saida);} ;
-*/
-
 start:
        'Start' {saida+= x.printInicio();}
        cmd
@@ -50,37 +41,48 @@ cmd:
 
 
 tipo: 
-'BatInt' ({tipo= 0; saida+= "int ";} | 'BatChar' {tipo= 1; saida+="char ";} | 'Batdouble' {tipo= 2; saida+="double ";})
+('BatInt' {tipo= 0; saida+= "int ";} 
+| 'BatChar' {tipo= 1; saida+="String ";} 
+| 'BatDouble' {tipo= 2; saida+="double ";})
 
 ;
 
 
 cmdDeclVar:
-    (tipo ID Op_atrib VAR {Variavel y= new Variavel($ID.text, tipo, $VAR.text) ;
-                boolean ret= cv.adiciona(y);
+    tipo
+    ID 
+    Op_atrib 
+    TESTE
+    FL
+    ({Variavel y= new Variavel($ID.text, tipo, $TESTE.text) ;
+                boolean ret = cv.adiciona(y);
                 if(!ret){
-                    System.out.println("Variavel " +$ID.text+ $VAR.text+" ja existe");
+                    System.out.println("Variavel " +$ID.text+" ja existe");
                     System.exit(0);
-                    }} FL {saida+=$ID.text+";\n\t";} ) 
+                    }}) 
+    {saida+=$ID.text;} 
+    {saida+=" = ";} 
+    {saida+=$TESTE.text+";\n\t";}
 ;
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
 cmdPrint:
-    'Batprint' AC (ID {boolean ret = cv.Existe($ID.text);
+    ('Batprint' AC (NUM {boolean ret = cv.Existe($NUM.text);
                         if(ret){
-                            saida+=x.printString($ID.text);
+                            saida+=x.printString($NUM.text);
                         }
                       })* FC FL
-    | 'Batprint' AC (TEXTO {saida+=x.printString($TEXTO.text);})* FC FL
+    | 'Batprint' AC (STRING {saida+=x.printString($STRING.text);})* FC FL)
 ;
 
 
 
 ID: [a-zA-Z0-9]([a-zA-Z0-9])*;
-VAR: ID | NUM | DOU;
 AC: '(';
 FC: ')';
-NUM:[0-9]+;
+NUM: [0-9]+;
+TESTE: ((DOU) | (NUM) | (STRING));
+STRING:'"'[a-zA-Z0-9]([a-zA-Z0-9])* '"';
 DOU: [0-9]+ '.' [0-9]+;
 Op_atrib: '=';
 WS: [ \t\r\n]+ -> skip;
@@ -93,7 +95,6 @@ DIV:'/';
 AS:'"';
 
 FL: ';';
-TEXTO: ' " ' [a-zA-Z0-9]* ' " ';
 
 OP_REL: '<'|'>'|'<='|'>='|'!='|'==';
 
