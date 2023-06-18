@@ -1,11 +1,12 @@
 public class Variavel {
     private String nome;
     private int tipo;
-   
+    private String valor;
 
-    public Variavel(String nome, int tipo){
+    public Variavel(String nome, int tipo, String valor){
         this.nome= nome;
         this.tipo= tipo;
+        this.valor= valor;
     }
 
     public String getNome(){
@@ -24,8 +25,16 @@ public class Variavel {
         this.tipo= tipo;
     }
 
+    public String getValor(){
+        return valor;
+    }
+
+    public void setValor(String valor){
+        this.valor= valor;
+    }
+
     public void imprime(){
-        System.out.println("Nome " +nome+ "\nTipo: " +tipo);
+        System.out.println("Nome " +nome+ "\nTipo: " +tipo+ "\nValor: " +valor);
     }
     
 }
