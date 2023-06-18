@@ -66,12 +66,9 @@ cmdDeclVar:
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
 cmdPrint:
-    'Batprint' AC (ID {boolean ret = cv.Existe($ID.text);
-                        if(ret){
-                            saida+=x.printString($ID.text);
-                        }
-                      })* FC FL
-    | 'Batprint' AC (TEXTO {saida+=x.printString($TEXTO.text);})* FC FL
+    'Batprint' AC (ID {saida+=x.printString($ID.text);})* FC FL
+| 'Batprint' AC (TEXTO {saida+=x.printString($TEXTO.text);})* FC FL
+
 ;
 
 
@@ -94,7 +91,7 @@ DIV:'/';
 AS:'"';
 
 FL: 'BAT';
-TEXTO: ' " ' [a-z]([a-z]|[A-Z]|[0-9])* ' " ';
+TEXTO: ' " ' ID* ' " ';
 
 OP_REL: '<'|'>'|'<='|'>='|'!='|'==';
 
