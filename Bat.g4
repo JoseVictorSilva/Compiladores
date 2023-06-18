@@ -61,14 +61,17 @@ cmdDeclVar:
                 if(!ret){
                     System.out.println("Variavel " +$ID.text+ " ja existe");
                     System.exit(0);
-                    }} FL {saida+=$ID.text+";\n\t";} ) FL
+                    }} FL {saida+=$ID.text+";\n\t";} )
 ;
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
 cmdPrint:
-    'Batprint' AC (ID {saida+=x.printString($ID.text);})* FC FL
-| 'Batprint' AC (TEXTO {saida+=x.printString($TEXTO.text);})* FC FL
-
+    'Batprint' AC (ID {boolean ret = cv.Existe($ID.text);
+                        if(ret){
+                            saida+=x.printString($ID.text);
+                        }
+                      })* FC FL
+    | 'Batprint' AC (TEXTO {saida+=x.printString($TEXTO.text);})* FC FL
 ;
 
 
@@ -91,7 +94,7 @@ DIV:'/';
 AS:'"';
 
 FL: 'BAT';
-TEXTO: ' " ' ID* ' " ';
+TEXTO: AS [a-z]([a-z]|[A-Z]|[0-9])* AS;
 
 OP_REL: '<'|'>'|'<='|'>='|'!='|'==';
 
