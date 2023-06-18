@@ -1,0 +1,3 @@
+inicio
+	bola = 10;
+fim
