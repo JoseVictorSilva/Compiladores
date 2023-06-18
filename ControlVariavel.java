@@ -7,7 +7,6 @@ public class ControlVariavel {
     public ControlVariavel(){
         acumulador = new ArrayList<Variavel>();
     }
-    
 
     public boolean adiciona(Variavel x){
         for(int i= 0; i<acumulador.size(); i++){
@@ -17,7 +16,6 @@ public class ControlVariavel {
         acumulador.add(x);
         return true;
     }
-
     public Variavel busca(String nome){
         for(int i=acumulador.size()-1; i>=0; i--){
             if(acumulador.get(i).getNome().equals(nome))
