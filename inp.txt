@@ -1,0 +1,12 @@
+Start
+
+Batprint(Hello World do Batman aqui) BAT
+
+BatInt int1= 5 BAT
+BatInt int2= 9 BAT
+
+
+Batprint(int1)
+Batprint(int2)
+
+fim
