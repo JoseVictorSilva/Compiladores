@@ -56,12 +56,12 @@ tipo:
 
 
 cmdDeclVar:
-    (tipo ID Op_atrib {Variavel y= new Variavel($ID.text, tipo);
+    (tipo ID Op_atrib VAR {Variavel y= new Variavel($ID.text, tipo, $VAR.text) ;
                 boolean ret= cv.adiciona(y);
                 if(!ret){
-                    System.out.println("Variavel " +$ID.text+ " ja existe");
+                    System.out.println("Variavel " +$ID.text+ $VAR.text+" ja existe");
                     System.exit(0);
-                    }}  {saida+=$ID.text+";\n\t";} ) FL
+                    }} FL {saida+=$ID.text+";\n\t";} ) 
 ;
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
@@ -77,10 +77,11 @@ cmdPrint:
 
 
 ID: [a-zA-Z0-9]([a-zA-Z0-9])*;
+VAR: ID | NUM | DOU;
 AC: '(';
 FC: ')';
 NUM:[0-9]+;
-DOU: [0-9]+ '.' [0-9];
+DOU: [0-9]+ '.' [0-9]+;
 Op_atrib: '=';
 WS: [ \t\r\n]+ -> skip;
 
@@ -91,8 +92,8 @@ DIV:'/';
 
 AS:'"';
 
-FL: 'BAT';
-TEXTO: ' " ' [a-zA-Z0-9]([a-zA-Z0-9])* ' " ';
+FL: ';';
+TEXTO: ' " ' [a-zA-Z0-9]* ' " ';
 
 OP_REL: '<'|'>'|'<='|'>='|'!='|'==';
 

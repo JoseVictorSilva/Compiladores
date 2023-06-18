@@ -1,12 +1,15 @@
 Start
 
-Batprint(Hello World do Batman aqui) BAT
+Batprint(Hello World do Batman aqui);
 
-BatInt int1= 5 BAT
-BatInt int2= 9 BAT
+BatInt x=5;
+BatChar nome = Felipe;
+Batdouble y= 1.5;
 
 
-Batprint(int1)
-Batprint(int2)
+
+Batprint(x);
+Batprint(nome);
+Batprint(y);
 
 fim
