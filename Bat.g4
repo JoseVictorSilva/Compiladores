@@ -67,12 +67,13 @@ cmdDeclVar:
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
 cmdPrint:
-    ('Batprint' AC (NUM {boolean ret = cv.Existe($NUM.text);
+    'Batprint' AC ((ID {boolean ret = cv.Existe($ID.text);
                         if(ret){
-                            saida+=x.printString($NUM.text);
-                        }
-                      })* FC FL
-    | 'Batprint' AC (STRING {saida+=x.printString($STRING.text);})* FC FL)
+                            saida+=x.printString($ID.text);}
+                        })
+                    | (STRING {saida+=x.printString($STRING.text);})) 
+                FC 
+            FL
 ;
 
 

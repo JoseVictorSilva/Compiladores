@@ -1,6 +1,6 @@
 Start
 
-BatChar x = "teste";
+BatChar x = teste;
 BatDouble z = 5.1;
 
 Batprint(x);
