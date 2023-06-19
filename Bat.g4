@@ -47,14 +47,32 @@ tipo:
 
 ;
 
+expr:
+    (VAR ASExpr VAR)*
+    ;
+
+ASExpr:
+    MDExpr ((ADD | SUB) MDExpr)*
+    ;
+
+MDExpr:
+     ((MUL | DIV ) )*
+
+    ;
+
+condicao:
+
+        VAR OP_REL VAR
+
+;
 
 cmdDeclVar:
     tipo
     ID 
     Op_atrib 
-    TESTE
+    VAR
     FL
-    ({Variavel y= new Variavel($ID.text, tipo, $TESTE.text) ;
+    ({Variavel y= new Variavel($ID.text, tipo, $VAR.text) ;
                 boolean ret = cv.adiciona(y);
                 if(!ret){
                     System.out.println("Variavel " +$ID.text+" ja existe");
@@ -62,7 +80,7 @@ cmdDeclVar:
                     }}) 
     {saida+=$ID.text;} 
     {saida+=" = ";} 
-    {saida+=$TESTE.text+";\n\t";}
+    {saida+=$VAR.text+";\n\t";}
 ;
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
@@ -84,12 +102,21 @@ cmdPrint:
             FL
 ;
 
+cmdIf:
+    'SE' AC condicao FC '{'
+        cmd
+    '}'
+    ( 'SENÃO' '{'
+        cmd
+    '}' )?
+;
+
 
 
 AS:'"';
 AC: '(';
 FC: ')';
-TESTE: ((DOU) | (STRING));
+VAR: ((DOU) | (STRING));
 STRING: '"' ID '"';
 ID: [a-zA-Z]([a-zA-Z])*;
 NUM:[0-9]+;
