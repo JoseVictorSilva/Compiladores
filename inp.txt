@@ -4,6 +4,14 @@ BatChar x = "teste";
 BatDouble z = 5.1;
 BatInt c = 15;
 
+se(c > *){
+    Batprint(besta);
+}senao{
+    Batprint(10);
+}
+
+c = c + 5;
+
 Batprint(x);
 Batprint(10);
 Batprint(besta);

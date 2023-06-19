@@ -31,10 +31,12 @@ start:
        
 cmd:
    ( cmdDeclVar
-    //|cmdIf
+    |cmdIF
     //|cmdWhile
     //|cmdFor
     |cmdPrint
+    |cmdContas
+ 
     //|cmdScan
    )*
 ;
@@ -65,9 +67,28 @@ cmdDeclVar:
     {saida+=$TESTE.text+";\n\t";}
 ;
 
+cmdContas:
+    ID
+    Op_atrib
+    expr 
+    FL
+    { saida += $ID.text +" = "+" " + $expr.text + ";\n\t"; }
+;
+
+expr:
+    expr ('*' | '/') expr    
+    | expr ('+' | '-') expr  
+    | TESTE                       
+    | ID               
+;
+
+cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
+		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
+;
+
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
 cmdPrint:
-    'Batprint' AC ((ID {boolean ret = cv.Existe($ID.text);
+    'Batprint' AP ((ID {boolean ret = cv.Existe($ID.text);
                         if(ret){
                             saida+=x.printString($ID.text);
                         }
@@ -78,32 +99,22 @@ cmdPrint:
                             saida+="\");\n\t";
                         }
                         })
-<<<<<<< HEAD
-                    | NUM {saida+=x.printString($NUM.text);}
-=======
                     | TESTE {saida+=x.printString($TESTE.text);}
->>>>>>> origin/victor
                     ) 
-                FC 
+                FP
             FL
 ;
 
-
-
 AS:'"';
-AC: '(';
-FC: ')';
-<<<<<<< HEAD
-TESTE: ((DOU) | (STRING));
-STRING: '"' ID '"';
-ID: [a-zA-Z]([a-zA-Z])*;
-NUM:[0-9]+;
-=======
+AP: '(';
+FP: ')';
+AC: '{';
+FC: '}';
 TESTE: ((DOU)| (NUM) | (STRING));
+comp:  expr OP_REL expr;
 NUM:[0-9]+;
 STRING: '"' ID '"';
 ID: [a-zA-Z]([a-zA-Z])*;
->>>>>>> origin/victor
 DOU: [0-9]+ '.' [0-9]+;
 Op_atrib: '=';
 ADD:'+';
