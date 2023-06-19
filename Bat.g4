@@ -14,6 +14,7 @@ options{
     Print x= new Print();
     //Variavel y= new Variavel();
     ControlVariavel cv= new ControlVariavel();
+    Writer w = new Writer();
     String saida="";
     int tipo;
     String nome;
@@ -26,6 +27,7 @@ start:
        'Start' {saida+= x.printInicio();}
        cmd
        'fim'{saida+= x.printFim();}
+       {w.write(saida);}
        {System.out.println(saida);}
     ;
        
@@ -123,12 +125,6 @@ cmdPrint:
                         if(ret){
                             saida+=x.printString($ID.text);
                         }
-                        else{
-                            saida+="System.out.println(";
-                            saida+="\"";
-                            saida+=$ID.text;
-                            saida+="\");\n\t";
-                        }
                         })
                     | NUM {saida+=x.printString($NUM.text);}
                     ) 
@@ -152,6 +148,7 @@ STRING: '"' ID '"';
 ID: [a-zA-Z]([a-zA-Z])*;
 NUM:[0-9]+;
 DOU: [0-9]+ '.' [0-9]+;
+
 Op_atrib: '=';
 ADD:'+';
 SUB:'-';
