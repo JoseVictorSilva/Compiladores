@@ -2,19 +2,18 @@ Start
 
 BatChar x = "teste";
 BatDouble z = 5.1;
-BatInt c = 15;
+BatInt c = 1;
 
 se(c > 4){
-    Batprint("besta eu sou jose oi felipe");
+    Batprint("C maior que 4");
 }senao{
-    Batprint(10);
+    Batprint("C menor que 4");
 }
 
-c = c + 5;
+c = c + 5 * 2 + 45 * 38;
+z = c + 5 * 2 + 45 * 38 - 100.10;
 
-Batprint(x);
-Batprint(10);
-Batprint(besta);
+Batprint("besta");
 Batprint(c);
 
 fim

@@ -24,10 +24,12 @@ options{
 }
 
 start:
+       {w.limpa();}
        'Start' {saida+= x.printInicio();}
        cmd
        'fim'{saida+= x.printFim();}
        {w.write(saida);}
+       {w.exec(saida);}
        {System.out.println(saida);}
     ;
        
@@ -83,7 +85,6 @@ expr:
     | TESTE                       
     | ID               
 ;
-
 cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
 		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
 ;
@@ -109,7 +110,7 @@ AC: '{';
 FC: '}';
 
 TESTE: ((DOU)| (NUM) | (STRING));
-comp:  (|TESTE | ID) OP_REL (TESTE | ID);
+comp:  (TESTE | ID) OP_REL (TESTE | ID);
 NUM:[0-9]+;
 STRING: '"' (~["\r\n])* '"';
 ID: [a-zA-Z]([a-zA-Z])*;
