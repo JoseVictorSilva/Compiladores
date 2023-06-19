@@ -69,31 +69,36 @@ cmdDeclVar:
 cmdPrint:
     'Batprint' AC ((ID {boolean ret = cv.Existe($ID.text);
                         if(ret){
-                            saida+=x.printString($ID.text);}
+                            saida+=x.printString($ID.text);
+                        }
+                        else{
+                            saida+="System.out.println(";
+                            saida+="\"";
+                            saida+=$ID.text;
+                            saida+="\");\n\t";
+                        }
                         })
-                    | (STRING {saida+=x.printString($STRING.text);})) 
+                    | NUM {saida+=x.printString($NUM.text);}
+                    ) 
                 FC 
             FL
 ;
 
 
 
-ID: [a-zA-Z0-9]([a-zA-Z0-9])*;
+AS:'"';
 AC: '(';
 FC: ')';
-NUM: [0-9]+;
-TESTE: ((DOU) | (NUM) | (STRING));
-STRING:'"'[a-zA-Z0-9]([a-zA-Z0-9])* '"';
+TESTE: ((DOU) | (STRING));
+STRING: '"' ID '"';
+ID: [a-zA-Z]([a-zA-Z])*;
+NUM:[0-9]+;
 DOU: [0-9]+ '.' [0-9]+;
 Op_atrib: '=';
-WS: [ \t\r\n]+ -> skip;
-
 ADD:'+';
 SUB:'-';
 MUL:'*';
 DIV:'/';
-
-AS:'"';
 
 FL: ';';
 
@@ -101,3 +106,5 @@ OP_REL: '<'|'>'|'<='|'>='|'!='|'==';
 
 INC:'++';
 DEC:'--';
+
+WS: [ \t\r\n]+ -> skip;
