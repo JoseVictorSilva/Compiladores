@@ -2,10 +2,11 @@ Start
 
 BatChar x = "teste";
 BatDouble z = 5.1;
+BatInt c = 15;
 
 Batprint(x);
 Batprint(10);
 Batprint(besta);
-Batprint(y);
+Batprint(c);
 
 fim

@@ -78,7 +78,11 @@ cmdPrint:
                             saida+="\");\n\t";
                         }
                         })
+<<<<<<< HEAD
                     | NUM {saida+=x.printString($NUM.text);}
+=======
+                    | TESTE {saida+=x.printString($TESTE.text);}
+>>>>>>> origin/victor
                     ) 
                 FC 
             FL
@@ -89,10 +93,17 @@ cmdPrint:
 AS:'"';
 AC: '(';
 FC: ')';
+<<<<<<< HEAD
 TESTE: ((DOU) | (STRING));
 STRING: '"' ID '"';
 ID: [a-zA-Z]([a-zA-Z])*;
 NUM:[0-9]+;
+=======
+TESTE: ((DOU)| (NUM) | (STRING));
+NUM:[0-9]+;
+STRING: '"' ID '"';
+ID: [a-zA-Z]([a-zA-Z])*;
+>>>>>>> origin/victor
 DOU: [0-9]+ '.' [0-9]+;
 Op_atrib: '=';
 ADD:'+';
