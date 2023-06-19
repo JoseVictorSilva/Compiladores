@@ -36,7 +36,7 @@ start:
 cmd:
    ( cmdDeclVar
     |cmdIF
-    //|cmdWhile
+    |cmdWhile
     //|cmdFor
     |cmdPrint
     |cmdContas
@@ -87,6 +87,9 @@ expr:
 ;
 cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
 		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
+;
+
+cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}"; }
 ;
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print

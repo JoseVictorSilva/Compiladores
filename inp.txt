@@ -10,10 +10,17 @@ se(c > 4){
     Batprint("C menor que 4");
 }
 
-c = c + 5 * 2 + 45 * 38;
-z = c + 5 * 2 + 45 * 38 - 100.10;
+enquanto(c < 2){
+    Batprint("C maior que 2");
+    c = c + 1;
+    Batprint(c);
+}
+
+c = c + 5 * 2 + 15 * 38;
+z = c + 5 * 2 + 25 * 38 - 100.10;
 
 Batprint("besta");
 Batprint(c);
+Batprint(z);
 
 fim
