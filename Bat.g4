@@ -83,7 +83,19 @@ cmdDeclVar:
     {saida+=$VAR.text+";\n\t";}
 ;
 
-// Revisar-> Diferenciação entre Strings e Variaveis durante o print
+cmdIf:
+    'SE' AC condicao FC '{'
+        cmd
+    '}'
+    ( 'SENÃO' '{'
+        cmd
+    '}' {
+        ifExample.processElse();
+    })?
+;
+
+
+
 cmdPrint:
     'Batprint' AC ((ID {boolean ret = cv.Existe($ID.text);
                         if(ret){
@@ -99,16 +111,7 @@ cmdPrint:
                     | NUM {saida+=x.printString($NUM.text);}
                     ) 
                 FC 
-            FL
-;
-
-cmdIf:
-    'SE' AC condicao FC '{'
-        cmd
-    '}'
-    ( 'SENÃO' '{'
-        cmd
-    '}' )?
+           
 ;
 
 
