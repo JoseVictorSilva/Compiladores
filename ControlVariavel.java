@@ -32,5 +32,10 @@ public class ControlVariavel {
         return false;
     }
 
+    public void retorna(){
+        
+
+    }
+
 
 }
