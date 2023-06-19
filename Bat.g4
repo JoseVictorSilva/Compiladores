@@ -31,10 +31,12 @@ start:
        
 cmd:
    ( cmdDeclVar
-    //|cmdIf
+    |cmdIF
     //|cmdWhile
     //|cmdFor
     |cmdPrint
+    |cmdContas
+ 
     //|cmdScan
    )*
 ;
@@ -96,8 +98,28 @@ cmdIf:
 
 
 
+cmdContas:
+    ID
+    Op_atrib
+    expr 
+    FL
+    { saida += $ID.text +" = "+" " + $expr.text + ";\n\t"; }
+;
+
+expr:
+    expr ('*' | '/') expr    
+    | expr ('+' | '-') expr  
+    | TESTE                       
+    | ID               
+;
+
+cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
+		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
+;
+
+// Revisar-> Diferenciação entre Strings e Variaveis durante o print
 cmdPrint:
-    'Batprint' AC ((ID {boolean ret = cv.Existe($ID.text);
+    'Batprint' AP ((ID {boolean ret = cv.Existe($ID.text);
                         if(ret){
                             saida+=x.printString($ID.text);
                         }
