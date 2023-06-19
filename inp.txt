@@ -4,8 +4,8 @@ BatChar x = "teste";
 BatDouble z = 5.1;
 BatInt c = 15;
 
-se(c > *){
-    Batprint(besta);
+se(c > 4){
+    Batprint("besta eu sou jose oi felipe");
 }senao{
     Batprint(10);
 }
