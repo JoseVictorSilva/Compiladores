@@ -85,10 +85,10 @@ cmdDeclVar:
 
 cmdIf:
     'SE' AC condicao FC '{'
-        cmd
+        
     '}'
     ( 'SENÃO' '{'
-        cmd
+        
     '}' {
         ifExample.processElse();
     })?
@@ -114,6 +114,12 @@ cmdPrint:
            
 ;
 
+cmdWhile: 
+    'BatWhile' AC (NUM OP_REL NUM){
+        saida+=x.whileFunction($NUM.text,$OP_REL,$NUM.text)
+    } FC
+    FL
+;
 
 
 AS:'"';
