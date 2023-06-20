@@ -52,3 +52,14 @@ ExemplosProfessor/Simples/.antlr/tokLexer.java
 ExemplosProfessor/Simples/.antlr/tokParser.java
 ExemplosProfessor/*
 test.java
+BatParser$CmdContasContext.class
+BatParser$CmdDoWhileContext.class
+BatParser$CmdForContext.class
+BatParser$CmdIFContext.class
+BatParser$CmdScanDoubleContext.class
+BatParser$CmdScanIntContext.class
+BatParser$CmdScanStringContext.class
+BatParser$CmdWhileContext.class
+BatParser$CompContext.class
+BatParser$ExprContext.class
+*.class

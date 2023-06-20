@@ -21,7 +21,7 @@ public class Variavel {
                 throw new IllegalArgumentException("O valor da variável Double não deve estar entre aspas.");  
             }
             if (!valor.matches("^\\d*\\.?\\d+$")) {
-                throw new IllegalArgumentException("O valor da variável double deve conter apenas dígitos numéricos.");
+                throw new IllegalArgumentException("O valor da variável double deve conter apenas dígitos numéricos e um ponto.");
             }
         }
         
