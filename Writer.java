@@ -20,9 +20,9 @@ public class Writer {
 
         try {
             ProcessBuilder pb = new ProcessBuilder("java", caminhoArquivo);
-            pb.inheritIO(); // Redireciona a entrada/saída padrão do processo atual para o processo filho
+            pb.inheritIO();
             Process processo = pb.start();
-            int status = processo.waitFor(); // Aguarda o término do processo
+            int status = processo.waitFor();
 
             if (status == 0) {
                 System.out.println("O arquivo foi executado com sucesso.");

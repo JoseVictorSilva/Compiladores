@@ -10,6 +10,16 @@ Batprint(c);
 Batprint(z);
 Batprint("DEU CERTO PORRAAAAAAAAAAA");
 Batprint("DEU CERTO PORRAAAAAAAAAAA");
+Batprint("DEU CERTO PORRAAAAAAAAAAA");
+Batprint("DEU CERTO PORRAAAAAAAAAAA");
+Batprint("DEU CERTO PORRAAAAAAAAAAA");
+Batprint("DEU CERTO PORRAAAAAAAAAAA");
+Batprint("DEU CERTO PORRAAAAAAAAAAA");
+Batprint("DEU CERTO PORRAAAAAAAAAAA");
 
+enquanto(c<4){
+    Batprint(c);
+    c++;
+}
 
 fim

@@ -29,8 +29,7 @@ public class ControlVariavel {
             if(acumulador.get(i).getNome().equals(nome))
                 return true;
         }
+        System.out.println("ERRO, VARIÁVEL "+nome+" NÃO EXISTE");
         return false;
     }
-
-
 }
