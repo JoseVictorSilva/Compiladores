@@ -6,7 +6,8 @@ options{
 
 @header {    
     import java.util.*;
-
+    import java.io.FileWriter;
+    import java.io.IOException;
 }
 
 @members{
@@ -24,13 +25,11 @@ options{
 }
 
 start:
-       {w.limpa();}
+
        'Start' {saida+= x.printInicio();}
        cmd
        'fim'{saida+= x.printFim();}
        {w.write(saida);}
-       {w.exec(saida);}
-       {System.out.println(saida);}
     ;
        
 cmd:
@@ -89,7 +88,10 @@ cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } 
 		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
 ;
 
-cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}"; }
+cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd 
+    ID (LACO)? {saida +=$ID.text;} {saida += $LACO.text+";\n\t";} FL
+
+FC {saida+="}\n\t"; }
 ;
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
@@ -126,6 +128,8 @@ MUL:'*';
 DIV:'/';
 
 FL: ';';
+
+LACO: (INC | DEC );
 
 OP_REL: '<'|'>'|'<='|'>='|'!='|'==';
 

@@ -1,26 +1,15 @@
 Start
 
-BatChar x = "teste";
 BatDouble z = 5.1;
 BatInt c = 1;
 
-se(c > 4){
-    Batprint("C maior que 4");
-}senao{
-    Batprint("C menor que 4");
-}
-
-enquanto(c < 2){
-    Batprint("C maior que 2");
-    c = c + 1;
-    Batprint(c);
-}
-
-c = c + 5 * 2 + 15 * 38;
-z = c + 5 * 2 + 25 * 38 - 100.10;
+BatInt i = 0;
 
 Batprint("besta");
 Batprint(c);
 Batprint(z);
+Batprint("DEU CERTO PORRAAAAAAAAAAA");
+Batprint("DEU CERTO PORRAAAAAAAAAAA");
+
 
 fim
