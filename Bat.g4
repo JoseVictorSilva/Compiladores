@@ -11,32 +11,29 @@ options{
 }
 
 @members{
-    //Obj Print, Classe Print e CV Classe ControlVariavel
+
     Print x= new Print();
-    //Variavel y= new Variavel();
     ControlVariavel cv= new ControlVariavel();
     Writer w = new Writer();
     String saida="";
     int tipo;
     String nome;
 
-    //
-
 }
 
 start:
-
+        {saida+="import java.util.Scanner;";}
        'Start' {saida+= x.printInicio();}
        cmd
        'fim'{saida+= x.printFim();}
        {w.write(saida);}
+       {System.out.println(saida);}
     ;
        
 cmd:
    ( cmdDeclVar
     |cmdIF
     |cmdWhile
-    //|cmdFor
     |cmdPrint
     |cmdContas
  
@@ -49,12 +46,11 @@ tipo:
 ('BatInt' {tipo= 0; saida+= "int ";} 
 | 'BatChar' {tipo= 1; saida+="String ";} 
 | 'BatDouble' {tipo= 2; saida+="double ";})
-
 ;
 
 
 cmdDeclVar:
-    tipo
+    tipo 
     ID 
     Op_atrib 
     TESTE
@@ -65,7 +61,7 @@ cmdDeclVar:
                     System.out.println("Variavel " +$ID.text+" ja existe");
                     System.exit(0);
                     }}) 
-    {saida+=$ID.text;} 
+    {saida+=" "+$ID.text;} 
     {saida+=" = ";} 
     {saida+=$TESTE.text+";\n\t";}
 ;
@@ -114,7 +110,7 @@ FP: ')';
 AC: '{';
 FC: '}';
 
-TESTE: ((DOU)| (NUM) | (STRING));
+TESTE: ((DOU) | (NUM) | (STRING));
 comp:  (TESTE | ID) OP_REL (TESTE | ID);
 NUM:[0-9]+;
 STRING: '"' (~["\r\n])* '"';

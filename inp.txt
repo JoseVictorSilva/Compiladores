@@ -9,13 +9,9 @@ Batprint("besta");
 Batprint(c);
 Batprint(z);
 Batprint("DEU CERTO PORRAAAAAAAAAAA");
-Batprint("DEU CERTO PORRAAAAAAAAAAA");
-Batprint("DEU CERTO PORRAAAAAAAAAAA");
-Batprint("DEU CERTO PORRAAAAAAAAAAA");
-Batprint("DEU CERTO PORRAAAAAAAAAAA");
-Batprint("DEU CERTO PORRAAAAAAAAAAA");
-Batprint("DEU CERTO PORRAAAAAAAAAAA");
-Batprint("DEU CERTO PORRAAAAAAAAAAA");
+
+
+scan(c)
 
 enquanto(c<4){
     Batprint(c);
