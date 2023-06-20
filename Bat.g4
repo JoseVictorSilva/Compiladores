@@ -36,6 +36,7 @@ cmd:
     |cmdWhile
     |cmdPrint
     |cmdContas
+    |cmdDoWhile
  
     //|cmdScan
    )*
@@ -74,15 +75,38 @@ cmdContas:
     { saida += $ID.text +" = "+" " + $expr.text + ";\n\t"; }
 ;
 
+
+cmdDoWhile: 
+  'Batdo' { saida+= "do"; } AC {saida+="{";}  cmd ( ID {saida+= $ID.text;}(LACO)?{saida+= $LACO.text;})FL {saida+= ";";} FC {saida+="}";} 
+
+  'Batwhile'{saida+= "while";} AP { saida += "("; } comp { saida += $comp.text; } FP { saida += ")"; } FL { saida += ";"; }
+;
+
+
+cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
+		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
+;
+
+/*
+cmdFor: 'para' {saida+="for";} AP {saida+="(";} 'BatInt' {saida+="int";} ATR {saida+= $ATR.text;} FL {saida+=";";} ID {saida+=$ID.text;} (LACO)? {saida+= $LACO.text;} FP{saida+= ")";} AC{saida+= "$AC.text";}  FC{saida+=$FC.text;}
+;
+
+
+/* 
+cmdScan:
+        tipo ID{saida+=$ID.text} 'scan' Op_atrib 'scan.nextInt()' FL 
+
+;
+
+*/
 expr:
     expr ('*' | '/') expr    
     | expr ('+' | '-') expr  
     | TESTE                       
     | ID               
 ;
-cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
-		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
-;
+
+
 
 cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd 
     ID (LACO)? {saida +=$ID.text;} {saida += $LACO.text+";\n\t";} FL
@@ -110,7 +134,7 @@ FP: ')';
 AC: '{';
 FC: '}';
 
-TESTE: ((DOU) | (NUM) | (STRING));
+TESTE: ((DOU)| (NUM) | (STRING));
 comp:  (TESTE | ID) OP_REL (TESTE | ID);
 NUM:[0-9]+;
 STRING: '"' (~["\r\n])* '"';
@@ -123,6 +147,7 @@ SUB:'-';
 MUL:'*';
 DIV:'/';
 
+ATR:(ID Op_atrib NUM) ;
 FL: ';';
 
 LACO: (INC | DEC );
