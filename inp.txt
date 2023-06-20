@@ -1,78 +1,79 @@
-Start
+BATMAN
 
 BatInt inteiro = 1;
 BatDouble pontos = 5.1;
-BatChar string = "Testando";
+BatString string = "Testando";
 
 //Testando comentário
 
-Batprint("Valor Inteiro");
-Batprint(inteiro);
+BatPrint("Valor Inteiro");
+BatPrint(inteiro);
 
-Batprint("Valor com Ponto Flutuante");
-Batprint(pontos);
+BatPrint("Valor com Ponto Flutuante");
+BatPrint(pontos);
 
-Batprint("Valor da String");
-Batprint(string);
+BatPrint("Valor da String");
+BatPrint(string);
 
 pontos = inteiro + pontos + 23 - 5 * 4 / 2;
-Batprint("Conta realizada, resultado:");
-Batprint(pontos);
+BatPrint("Conta realizada, resultado:");
+BatPrint(pontos);
 
 BatInt soma = 2;
 soma = inteiro + soma;
-Batprint("Conta realizada, resultado:");
-Batprint(soma);
+BatPrint("Conta realizada, resultado:");
+BatPrint(soma);
 
 
-Batprint("Insira uma String: ");
-scanString(string);
+BatPrint("Insira uma String: ");
+BatScanString(string);
 
-Batprint("Insira um Inteiro: ");
-scanInt(soma);
+BatPrint("Insira um Inteiro: ");
+BatScanInt(soma);
 
-Batprint("Insira um Double: ");
-scanDouble(pontos);
+BatPrint("Insira um Double: ");
+BatScanDouble(pontos);
 
-Batprint("Valor da String");
-Batprint(string);
+BatPrint("Valor da String");
+BatPrint(string);
 
-Batprint("Valor Inteiro");
-Batprint(soma);
+BatPrint("Valor Inteiro");
+BatPrint(soma);
 
-Batprint("Valor com Ponto Flutuante");
-Batprint(pontos);
+BatPrint("Valor com Ponto Flutuante");
+BatPrint(pontos);
 
-Batprint("INICIO DO IF");
+BatPrint("INICIO DO IF");
 BatInt condicao = 5;
 
-se(condicao > 0){
-    Batprint("A condicao e maior que 0");
-}senao{
-    Batprint("A condicao nao e maior que 0");
+BatIf(condicao > 0){
+    BatPrint("A condicao e maior que 0");
+}BatElse{
+    BatPrint("A condicao nao e maior que 0");
 }
 
-se(soma == 3){
-    Batprint("A condicao e igual a 3");
-}senao{
-    Batprint("A condicao nao e igual a 3");
+BatIf(soma == 3){
+    BatPrint("A condicao e igual a 3");
+}BatElse{
+    BatPrint("A condicao nao e igual a 3");
 }
 
-Batprint("INICIO DOS LACOS");
+BatPrint("INICIO DOS LACOS");
 
-enquanto(pontos > 0){
-    Batprint(pontos);
+BatWhile(pontos > 0){
+    BatPrint(pontos);
     pontos--;
 }
-enquanto(soma < 20){
-    Batprint(soma);
+BatWhile(soma < 20){
+    BatPrint(soma);
     soma++;
 }
 
-Batdo{
-    Batprint(soma);
+BatDo{
+    BatPrint(soma);
     soma--;
-}Batwhile(
+}BatDoWhile(
     soma > 10
 );
-fim
+
+BATEND

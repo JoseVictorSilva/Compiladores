@@ -19,16 +19,18 @@ options{
     String nome;
 }
 
+// Inicia o nosso compilador com o comando grun Bat start (arquivo.txt)
 start:
 	{saida+= "import java.util.Scanner;";}
 	{saida+= "import java.util.Locale;";} {saida+="\n\t";}
-       'Start' {saida+= x.printInicio();}
+       'BATMAN' {saida+= x.printInicio();}
        cmd
-       'fim'{saida+= x.printFim();}
+       'BATEND'{saida+= x.printFim();}
        {w.write(saida);}
        {System.out.println(saida);}
     ;
-       
+
+// Define a cadeia de comandos que podem ser chamados       
 cmd:
    ( cmdDeclVar
     |cmdIF
@@ -46,17 +48,18 @@ cmd:
 
 tipo: 
 ('BatInt' {tipo= 0; saida+= "int ";} 
-| 'BatChar' {tipo= 1; saida+="String ";} 
+| 'BatString' {tipo= 1; saida+="String ";} 
 | 'BatDouble' {tipo= 2; saida+="double ";})
 ;
 
+// Declara a variável, a gramática é: tipo ID = VAR;
 cmdDeclVar:
     tipo 
     ID 
     Op_atrib 
-    TESTE
+    VAR
     FL
-    ({Variavel y= new Variavel($ID.text, tipo, $TESTE.text) ;
+    ({Variavel y= new Variavel($ID.text, tipo, $VAR.text) ;
                 boolean ret = cv.adiciona(y);
                 if(!ret){
                     System.out.println("Variavel " +$ID.text+" ja existe");
@@ -64,9 +67,10 @@ cmdDeclVar:
                     }}) 
     {saida+=" "+$ID.text;} 
     {saida+=" = ";} 
-    {saida+=$TESTE.text+";\n\t";}
+    {saida+=$VAR.text+";\n\t";}
 ;
 
+// Comando que realiza as contas, gramática: ID = expr; (expr = NUM + NUM, DOU - DOU)
 cmdContas:
     ID
     Op_atrib
@@ -75,21 +79,22 @@ cmdContas:
     { saida += $ID.text +" = "+" " + $expr.text + ";\n\t"; }
 ;
 
+// expr define a precedência
 expr:
     expr ('*' | '/') expr    
     | expr ('+' | '-') expr  
-    | TESTE                       
+    | VAR                       
     | ID               
 ;
 
-// Revisar-> Diferenciação entre Strings e Variaveis durante o print
+// Comando de Print, funcionando da seguinte forma -> BatPrint(ID ou VAR ou STRING);
 cmdPrint:
-    'Batprint' AP ((ID {boolean ret = cv.Existe($ID.text);
+    'BatPrint' AP ((ID {boolean ret = cv.Existe($ID.text);
                         if(ret){
                             saida+=x.printString($ID.text);
                         }
                         })
-                    | (TESTE) {saida+=x.printString($TESTE.text);}
+                    | (VAR) {saida+=x.printString($VAR.text);}
                     | STRING {saida+="System.out.println("+$STRING.text+");"; }  
                     ) 
                 FP
@@ -97,42 +102,48 @@ cmdPrint:
 ;
 
 
-cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
-		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
+
+// Comando de scan para números com ponto Flutuante, BatScanDouble(ID);
+cmdScanDouble: 'BatScanDouble' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextDouble();";} {saida+="\n\t"; }     
 ;
 
-
-cmdScanDouble: 'scanDouble' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextDouble();";} {saida+="\n\t"; }     
-
+// Comando de scan para números inteiros, BatScanInt(ID);
+cmdScanInt: 'BatScanInt' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextInt();";} {saida+="\n\t"; }     
 ;
 
-cmdScanInt: 'scanInt' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextInt();";} {saida+="\n\t"; }     
-
-;
-cmdScanString: 'scanString' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextLine();";} {saida+="\n\t"; }     
-
+// Comando de scan para Strings, BatScanString(ID);
+cmdScanString: 'BatScanString' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextLine();";} {saida+="\n\t"; }     
 ;
 
-cmdDoWhile: 
-  'Batdo' { saida+= "do"; } AC {saida+="{";}  cmd ( ID {saida+= $ID.text;}(LACO)?{saida+= $LACO.text;})FL {saida+= ";";} FC {saida+="}";} 
-
-  'Batwhile'{saida+= "while";} AP { saida += "("; } comp { saida += $comp.text; } FP { saida += ")"; } FL { saida += ";"; }
+// Comando de condicional, sua gramática é: BatIf(comp){cmd} BatElse{cmd};
+cmdIF: 'BatIf' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
+		('BatElse' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
 ;
 
-cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd 
+// Comando de repetição, ficando então BatWhile(comp){cmd};
+cmdWhile: 'BatWhile' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd 
     ID (LACO)? {saida +=$ID.text;} {saida += $LACO.text+";\n\t";} FL
 
 FC {saida+="}\n\t"; }
 ;
 
+// Comando de repetição, ficando então BatDo{cmd}BatDoWhile(comp);
+cmdDoWhile: 
+  'BatDo' { saida+= "do"; } AC {saida+="{";}  cmd ( ID {saida+= $ID.text;}(LACO)?{saida+= $LACO.text;})FL {saida+= ";";} FC {saida+="}";} 
+
+  'BatDoWhile'{saida+= "while";} AP { saida += "("; } comp { saida += $comp.text; } FP { saida += ")"; } FL { saida += ";"; }
+;
+
+
+// Regras Gerais da Gramática
 AS:'"';
 AP: '(';
 FP: ')';
 AC: '{';
 FC: '}';
 
-TESTE: ((DOU)| (NUM) | (STRING));
-comp:  (TESTE | ID) OP_REL (TESTE | ID);
+VAR: ((DOU)| (NUM) | (STRING));
+comp:  (VAR | ID) OP_REL (VAR | ID);
 NUM:[0-9]+;
 STRING: '"' (~["\r\n])* '"';
 ID: [a-zA-Z]([a-zA-Z])*;
