@@ -2,22 +2,27 @@ Start
 
 BatDouble z = 5.1;
 BatInt c = 1;
+BatChar g = "Testando";
 
-BatInt i = 0;
+Batprint("Insira uma String: ");
+scanString(g);
 
-Batprint("besta");
+Batprint("Insira um Inteiro: ");
+scanInt(c);
+
+Batprint("Insira um Double: ");
+scanDouble(z);
+
+Batprint(g);
 Batprint(c);
 Batprint(z);
-Batprint("DEU CERTO PORRAAAAAAAAAAA");
 
-Batdo{
-    Batprint(i);
-    i++;
-}Batwhile(i < 5)
-
-enquanto(c<4){
-    Batprint(c);
-    c++;
+BatInt a = 5;
+BatIf(a>0){
+    Batprint("Verdade");
+}BatElse{
+    Batprint("Falso")
 }
+
 
 fim

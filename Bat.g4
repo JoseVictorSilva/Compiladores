@@ -18,11 +18,11 @@ options{
     String saida="";
     int tipo;
     String nome;
-
 }
 
 start:
-        {saida+="import java.util.Scanner;";}
+	{saida+= "import java.util.Scanner;";}
+	{saida+= "import java.util.Locale;";} {saida+="\n\t";}
        'Start' {saida+= x.printInicio();}
        cmd
        'fim'{saida+= x.printFim();}
@@ -33,12 +33,14 @@ start:
 cmd:
    ( cmdDeclVar
     |cmdIF
-    |cmdWhile
     |cmdPrint
     |cmdContas
+    |cmdScanInt
+	|cmdScanDouble
+	|cmdScanString
+    |cmdWhile
     |cmdDoWhile
- 
-    //|cmdScan
+	
    )*
 ;
 
@@ -48,7 +50,6 @@ tipo:
 | 'BatChar' {tipo= 1; saida+="String ";} 
 | 'BatDouble' {tipo= 2; saida+="double ";})
 ;
-
 
 cmdDeclVar:
     tipo 
@@ -75,43 +76,11 @@ cmdContas:
     { saida += $ID.text +" = "+" " + $expr.text + ";\n\t"; }
 ;
 
-
-cmdDoWhile: 
-  'Batdo' { saida+= "do"; } AC {saida+="{";}  cmd ( ID {saida+= $ID.text;}(LACO)?{saida+= $LACO.text;})FL {saida+= ";";} FC {saida+="}";} 
-
-  'Batwhile'{saida+= "while";} AP { saida += "("; } comp { saida += $comp.text; } FP { saida += ")"; } FL { saida += ";"; }
-;
-
-
-cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
-		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
-;
-
-/*
-cmdFor: 'para' {saida+="for";} AP {saida+="(";} 'BatInt' {saida+="int";} ATR {saida+= $ATR.text;} FL {saida+=";";} ID {saida+=$ID.text;} (LACO)? {saida+= $LACO.text;} FP{saida+= ")";} AC{saida+= "$AC.text";}  FC{saida+=$FC.text;}
-;
-
-
-/* 
-cmdScan:
-        tipo ID{saida+=$ID.text} 'scan' Op_atrib 'scan.nextInt()' FL 
-
-;
-
-*/
 expr:
     expr ('*' | '/') expr    
     | expr ('+' | '-') expr  
     | TESTE                       
     | ID               
-;
-
-
-
-cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd 
-    ID (LACO)? {saida +=$ID.text;} {saida += $LACO.text+";\n\t";} FL
-
-FC {saida+="}\n\t"; }
 ;
 
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
@@ -126,6 +95,35 @@ cmdPrint:
                     ) 
                 FP
             FL
+;
+
+
+cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
+		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
+;
+
+
+cmdScanDouble: 'scanDouble' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextDouble();";} {saida+="\n\t"; }     
+
+;
+
+cmdScanInt: 'scanInt' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextInt();";} {saida+="\n\t"; }     
+
+;
+cmdScanString: 'scanString' AP (ID) FP FL {saida+=$ID.text+" = scanner.nextLine();";} {saida+="\n\t"; }     
+
+;
+
+cmdDoWhile: 
+  'Batdo' { saida+= "do"; } AC {saida+="{";}  cmd ( ID {saida+= $ID.text;}(LACO)?{saida+= $LACO.text;})FL {saida+= ";";} FC {saida+="}";} 
+
+  'Batwhile'{saida+= "while";} AP { saida += "("; } comp { saida += $comp.text; } FP { saida += ")"; } FL { saida += ";"; }
+;
+
+cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd 
+    ID (LACO)? {saida +=$ID.text;} {saida += $LACO.text+";\n\t";} FL
+
+FC {saida+="}\n\t"; }
 ;
 
 AS:'"';
