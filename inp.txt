@@ -1,7 +1,6 @@
 Start
 
 BatDouble z = 5.1;
-<<<<<<< HEAD
 BatInt c = 1;
 
 BatInt i = 0;
@@ -11,8 +10,10 @@ Batprint(c);
 Batprint(z);
 Batprint("DEU CERTO PORRAAAAAAAAAAA");
 
-
-scan(c)
+Batdo{
+    Batprint(i);
+    i++;
+}Batwhile(i < 5)
 
 enquanto(c<4){
     Batprint(c);
@@ -20,23 +21,3 @@ enquanto(c<4){
 }
 
 fim
-=======
-BatInt y = 9;
-BatInt v = 0;
-
-Batprint(x);
-Batprint(10);
-Batprint("besta");
-Batprint(y);
-
-Batdo
-{
-    Batprint("Teste: ");
-    Batprint(v);
-    v++;
-
-
-}Batwhile(v <= 10);
-
-fim
->>>>>>> Felipe
