@@ -4,6 +4,7 @@ BatInt inteiro = 1;
 BatDouble pontos = 5.1;
 BatChar string = "Testando";
 
+//Testando comentário
 
 Batprint("Valor Inteiro");
 Batprint(inteiro);
