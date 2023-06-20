@@ -1,12 +1,16 @@
 Start
 
-BatChar x = "teste";
-BatDouble z = 5.1;
-BatInt c = 15;
+BatInt x = 10;
+BatChar y = "nome";
+BatDouble z = 5.5;
 
-Batprint(x);
-Batprint(10);
-Batprint(besta);
-Batprint(c);
+
+
+
+scanDouble(z);
+Batprint(z);
+
+
+
 
 fim

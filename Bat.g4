@@ -6,7 +6,8 @@ options{
 
 @header {    
     import java.util.*;
-
+    import java.io.FileWriter;
+    import java.io.IOException;
 }
 
 @members{
@@ -14,28 +15,38 @@ options{
     Print x= new Print();
     //Variavel y= new Variavel();
     ControlVariavel cv= new ControlVariavel();
+    Writer w = new Writer();
     String saida="";
     int tipo;
     String nome;
+
 
     //
 
 }
 
 start:
+	{saida+= "import java.util.Scanner;";} {saida+="\n\t";}
+
+	
+
        'Start' {saida+= x.printInicio();}
        cmd
        'fim'{saida+= x.printFim();}
-       {System.out.println(saida);}
+       {w.write(saida);}
     ;
        
 cmd:
    ( cmdDeclVar
-    //|cmdIf
-    //|cmdWhile
+    |cmdIF
+    |cmdWhile
     //|cmdFor
     |cmdPrint
-    //|cmdScan
+    |cmdContas 
+    |cmdScanInt
+	|cmdScanDouble
+	|cmdScanString
+	
    )*
 ;
 
@@ -65,35 +76,74 @@ cmdDeclVar:
     {saida+=$TESTE.text+";\n\t";}
 ;
 
+cmdContas:
+    ID
+    Op_atrib
+    expr 
+    FL
+    { saida += $ID.text +" = "+" " + $expr.text + ";\n\t"; }
+;
+
+expr:
+    expr ('*' | '/') expr    
+    | expr ('+' | '-') expr  
+    | TESTE                       
+    | ID               
+;
+cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
+		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
+;
+
+cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd 
+    ID (LACO)? {saida +=$ID.text;} {saida += $LACO.text+";\n\t";} FL
+
+FC {saida+="}\n\t"; }
+;
+
 // Revisar-> Diferenciação entre Strings e Variaveis durante o print
 cmdPrint:
-    'Batprint' AC ((ID {boolean ret = cv.Existe($ID.text);
+    'Batprint' AP ((ID {boolean ret = cv.Existe($ID.text);
                         if(ret){
                             saida+=x.printString($ID.text);
                         }
-                        else{
-                            saida+="System.out.println(";
-                            saida+="\"";
-                            saida+=$ID.text;
-                            saida+="\");\n\t";
-                        }
                         })
-                    | TESTE {saida+=x.printString($TESTE.text);}
+                    | (TESTE) {saida+=x.printString($TESTE.text);}
+                    | STRING {saida+="System.out.println("+$STRING.text+");"; }  
                     ) 
-                FC 
+                FP
             FL
+;
+
+//NAO FUNCIONA
+cmdScanDouble: 'scanDouble' {saida+="Scanner scanner = new Scanner(System.in);";} {saida+="\n\t"; } AP (ID) FP FL {saida+=$ID.text+" = scanner.nextDouble();";} {saida+="\n\t"; }     
+
+;
+
+cmdScanInt: 'scanInt' {saida+="Scanner scanner = new Scanner(System.in);";} {saida+="\n\t"; } AP (ID) FP FL {saida+=$ID.text+" = scanner.nextInt();";} {saida+="\n\t"; }     
+
+;
+cmdScanString: 'scanString' {saida+="Scanner scanner = new Scanner(System.in);";} {saida+="\n\t"; } AP (ID) FP FL {saida+=$ID.text+" = scanner.nextLine();";} {saida+="\n\t"; }     
+
 ;
 
 
 
+
+
+
 AS:'"';
-AC: '(';
-FC: ')';
+AP: '(';
+FP: ')';
+AC: '{';
+FC: '}';
+
 TESTE: ((DOU)| (NUM) | (STRING));
+comp:  (TESTE | ID) OP_REL (TESTE | ID);
 NUM:[0-9]+;
-STRING: '"' ID '"';
+STRING: '"' (~["\r\n])* '"';
 ID: [a-zA-Z]([a-zA-Z])*;
 DOU: [0-9]+ '.' [0-9]+;
+
 Op_atrib: '=';
 ADD:'+';
 SUB:'-';
@@ -101,6 +151,8 @@ MUL:'*';
 DIV:'/';
 
 FL: ';';
+
+LACO: (INC | DEC );
 
 OP_REL: '<'|'>'|'<='|'>='|'!='|'==';
 
