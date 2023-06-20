@@ -11,7 +11,6 @@ options{
 }
 
 @members{
-
     Print x= new Print();
     ControlVariavel cv= new ControlVariavel();
     Writer w = new Writer();

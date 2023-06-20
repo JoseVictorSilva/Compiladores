@@ -1,28 +1,77 @@
 Start
 
-BatDouble z = 5.1;
-BatInt c = 1;
-BatChar g = "Testando";
+BatInt inteiro = 1;
+BatDouble pontos = 5.1;
+BatChar string = "Testando";
+
+
+Batprint("Valor Inteiro");
+Batprint(inteiro);
+
+Batprint("Valor com Ponto Flutuante");
+Batprint(pontos);
+
+Batprint("Valor da String");
+Batprint(string);
+
+pontos = inteiro + pontos + 23 - 5 * 4 / 2;
+Batprint("Conta realizada, resultado:");
+Batprint(pontos);
+
+BatInt soma = 2;
+soma = inteiro + soma;
+Batprint("Conta realizada, resultado:");
+Batprint(soma);
+
 
 Batprint("Insira uma String: ");
-scanString(g);
+scanString(string);
 
 Batprint("Insira um Inteiro: ");
-scanInt(c);
+scanInt(soma);
 
 Batprint("Insira um Double: ");
-scanDouble(z);
+scanDouble(pontos);
 
-Batprint(g);
-Batprint(c);
-Batprint(z);
+Batprint("Valor da String");
+Batprint(string);
 
-BatInt a = 5;
-BatIf(a>0){
-    Batprint("Verdade");
-}BatElse{
-    Batprint("Falso")
+Batprint("Valor Inteiro");
+Batprint(soma);
+
+Batprint("Valor com Ponto Flutuante");
+Batprint(pontos);
+
+Batprint("INICIO DO IF");
+BatInt condicao = 5;
+
+se(condicao > 0){
+    Batprint("A condicao e maior que 0");
+}senao{
+    Batprint("A condicao nao e maior que 0");
 }
 
+se(soma == 3){
+    Batprint("A condicao e igual a 3");
+}senao{
+    Batprint("A condicao nao e igual a 3");
+}
 
+Batprint("INICIO DOS LACOS");
+
+enquanto(pontos > 0){
+    Batprint(pontos);
+    pontos--;
+}
+enquanto(soma < 20){
+    Batprint(soma);
+    soma++;
+}
+
+Batdo{
+    Batprint(soma);
+    soma--;
+}Batwhile(
+    soma > 10
+);
 fim
