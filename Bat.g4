@@ -40,6 +40,7 @@ cmd:
     //|cmdFor
     |cmdPrint
     |cmdContas
+    |cmdDoWhile
  
     //|cmdScan
    )*
@@ -53,32 +54,14 @@ tipo:
 
 ;
 
-expr:
-    (VAR ASExpr VAR)*
-    ;
-
-ASExpr:
-    MDExpr ((ADD | SUB) MDExpr)*
-    ;
-
-MDExpr:
-     ((MUL | DIV ) )*
-
-    ;
-
-condicao:
-
-        VAR OP_REL VAR
-
-;
 
 cmdDeclVar:
     tipo
     ID 
     Op_atrib 
-    VAR
+    TESTE
     FL
-    ({Variavel y= new Variavel($ID.text, tipo, $VAR.text) ;
+    ({Variavel y= new Variavel($ID.text, tipo, $TESTE.text) ;
                 boolean ret = cv.adiciona(y);
                 if(!ret){
                     System.out.println("Variavel " +$ID.text+" ja existe");
@@ -86,21 +69,8 @@ cmdDeclVar:
                     }}) 
     {saida+=$ID.text;} 
     {saida+=" = ";} 
-    {saida+=$VAR.text+";\n\t";}
+    {saida+=$TESTE.text+";\n\t";}
 ;
-
-cmdIf:
-    'SE' AC condicao FC '{'
-        
-    '}'
-    ( 'SENÃO' '{'
-        
-    '}' {
-        ifExample.processElse();
-    })?
-;
-
-
 
 cmdContas:
     ID
@@ -110,15 +80,38 @@ cmdContas:
     { saida += $ID.text +" = "+" " + $expr.text + ";\n\t"; }
 ;
 
+
+cmdDoWhile: 
+  'Batdo' { saida+= "do"; } AC {saida+="{";}  cmd ( ID {saida+= $ID.text;}(LACO)?{saida+= $LACO.text;})FL {saida+= ";";} FC {saida+="}";} 
+
+  'Batwhile'{saida+= "while";} AP { saida += "("; } comp { saida += $comp.text; } FP { saida += ")"; } FL { saida += ";"; }
+;
+
+
+cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
+		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
+;
+
+/*
+cmdFor: 'para' {saida+="for";} AP {saida+="(";} 'BatInt' {saida+="int";} ATR {saida+= $ATR.text;} FL {saida+=";";} ID {saida+=$ID.text;} (LACO)? {saida+= $LACO.text;} FP{saida+= ")";} AC{saida+= "$AC.text";}  FC{saida+=$FC.text;}
+;
+
+
+/* 
+cmdScan:
+        tipo ID{saida+=$ID.text} 'scan' Op_atrib 'scan.nextInt()' FL 
+
+;
+
+*/
 expr:
     expr ('*' | '/') expr    
     | expr ('+' | '-') expr  
     | TESTE                       
     | ID               
 ;
-cmdIF: 'se' {saida+="if"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}";} 
-		('senao' {saida+="else"; }AC {saida+="{\n\t"; }cmd FC {saida+="}\n\t"; })? 
-;
+
+
 
 cmdWhile: 'enquanto' {saida+="while"; } AP {saida+="("; } comp FP {saida+=$comp.text+")"; } AC {saida+="{\n\t"; } cmd FC {saida+="}"; }
 ;
@@ -130,27 +123,24 @@ cmdPrint:
                             saida+=x.printString($ID.text);
                         }
                         })
-                    | NUM {saida+=x.printString($NUM.text);}
+                    | (TESTE) {saida+=x.printString($TESTE.text);}
+                    | STRING {saida+="System.out.println("+$STRING.text+");"; }  
                     ) 
-                FC 
-           
+                FP
+            FL
 ;
-
-cmdWhile: 
-    'BatWhile' AC (NUM OP_REL NUM){
-        saida+=x.whileFunction($NUM.text,$OP_REL,$NUM.text)
-    } FC
-    FL
-;
-
 
 AS:'"';
-AC: '(';
-FC: ')';
-TESTE: ((DOU) | (STRING));
-STRING: '"' ID '"';
-ID: [a-zA-Z]([a-zA-Z])*;
+AP: '(';
+FP: ')';
+AC: '{';
+FC: '}';
+
+TESTE: ((DOU)| (NUM) | (STRING));
+comp:  (TESTE | ID) OP_REL (TESTE | ID);
 NUM:[0-9]+;
+STRING: '"' (~["\r\n])* '"';
+ID: [a-zA-Z]([a-zA-Z])*;
 DOU: [0-9]+ '.' [0-9]+;
 
 Op_atrib: '=';
@@ -159,7 +149,10 @@ SUB:'-';
 MUL:'*';
 DIV:'/';
 
+ATR:(ID Op_atrib NUM) ;
 FL: ';';
+
+LACO: (INC | DEC );
 
 OP_REL: '<'|'>'|'<='|'>='|'!='|'==';
 
