@@ -2,10 +2,21 @@ Start
 
 BatChar x = "teste";
 BatDouble z = 5.1;
+BatInt y = 9;
+BatInt v = 0;
 
 Batprint(x);
 Batprint(10);
-Batprint(besta);
+Batprint("besta");
 Batprint(y);
+
+Batdo
+{
+    Batprint("Teste: ");
+    Batprint(v);
+    v++;
+
+
+}Batwhile(v <= 10);
 
 fim
