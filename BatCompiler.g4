@@ -1,4 +1,4 @@
-grammar Bat;
+grammar BatCompiler;
 
 options{
     language=Java;

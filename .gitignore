@@ -65,3 +65,11 @@ BatParser$ExprContext.class
 *.class
 Saida.java
 Saida.java
+BatCompiler.interp
+BatCompiler.tokens
+BatCompilerBaseListener.java
+BatCompilerLexer.interp
+BatCompilerLexer.java
+BatCompilerLexer.tokens
+BatCompilerListener.java
+BatCompilerParser.java

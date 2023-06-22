@@ -4,7 +4,7 @@ import java.io.IOException;
 public class Writer {
     public void write(String saida){
         try{
-            FileWriter f = new FileWriter("C:\\Users\\vitao\\Documentos\\Documentos\\José\\Aulas\\Anhembi\\Compiladores\\CompiladoresGit\\Compiladores\\Saida.java", false);
+            FileWriter f = new FileWriter("C:\\Users\\vitao\\Documentos\\Documentos\\José\\Aulas\\Anhembi\\Compiladores\\CompiladoresGit\\Compiladores\\Executavel\\Saida.java", false);
             f.write(saida);
             f.close();
             exec(saida);
@@ -16,7 +16,7 @@ public class Writer {
         }
     }
     public void exec(String saida){
-        String caminhoArquivo = "C:\\Users\\vitao\\Documentos\\Documentos\\José\\Aulas\\Anhembi\\Compiladores\\CompiladoresGit\\Compiladores\\Saida.java";
+        String caminhoArquivo = "C:\\Users\\vitao\\Documentos\\Documentos\\José\\Aulas\\Anhembi\\Compiladores\\CompiladoresGit\\Compiladores\\Executavel\\Saida.java";
 
         try {
             ProcessBuilder pb = new ProcessBuilder("java", caminhoArquivo);
@@ -36,7 +36,7 @@ public class Writer {
     public void limpa(){
         FileWriter g;
         try {
-            g = new FileWriter("C:\\Users\\vitao\\Documentos\\Documentos\\José\\Aulas\\Anhembi\\Compiladores\\CompiladoresGit\\Compiladores\\Saida.java", false);
+            g = new FileWriter("C:\\Users\\vitao\\Documentos\\Documentos\\José\\Aulas\\Anhembi\\Compiladores\\CompiladoresGit\\Compiladores\\Executavel\\Saida.java", false);
             g.close();
         } catch (IOException e) {
             e.printStackTrace();
